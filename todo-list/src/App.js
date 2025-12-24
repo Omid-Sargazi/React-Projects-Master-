@@ -6,6 +6,7 @@ import React,{useState,useEffect} from 'react';
 import TodoStats from './TodosFiles/TodoStats';
 import TodoList from './TodosFiles/TodoList';
 import TodoItem from './TodosFiles/TodoItem';
+import AddTodoForm from './TodosFiles/AddTodoForm';
 
 function App() {
   const [todos,setTodos] = useState([]);
@@ -33,7 +34,9 @@ function App() {
       setLoading(false);
     }
   }
-
+  const handleAddTodo = (newTodo) => {
+    setTodos(prev => [...prev, newTodo]);
+  };
   if (loading) return <div className="loading">در حال بارگذاری...</div>;
   if (error) return <div className="error">{error}</div>;
 
@@ -41,9 +44,11 @@ function App() {
   return (
    <div className="app">
       <h1>📝 برنامه مدیریت کارها</h1>
+      <h1>📝 برنامه سامیار سرگزی مدیریت کارها</h1>
       <div className="container">
         {/* 🎯 بخش‌های مختلف */}
         <TodoStats todos={todos} />
+        <AddTodoForm onAddTodo={handleAddTodo} />
         <TodoList todos={todos} />
       </div>
     </div>
