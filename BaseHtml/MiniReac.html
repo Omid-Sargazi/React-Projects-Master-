@@ -54,6 +54,14 @@
         <div id="app">
             <!-- اینجا Component رندر می‌شود -->
         </div>
+
+         <div id="app1"></div>
+        <div id="app2"></div>
+
+        <div class="info">
+        <h3>لاگ رویدادها:</h3>
+        <div id="logs"></div>
+        </div>
         
         <div class="state-view">
             <strong>state فعلی:</strong>
@@ -64,9 +72,19 @@
     </div>
 
     <script>
+        
+        function log(message) {
+            const logs = document.getElementById('logs');
+            const time = new Date().toLocaleTimeString();
+            logs.innerHTML = `<div><strong>${time}:</strong> ${message}</div>` + logs.innerHTML;
+        }
+
+        
 
         let state = {count:0};
         console.log("state",state)
+
+        
 
         function CounterComponent(state)
         {
