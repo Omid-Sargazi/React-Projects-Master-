@@ -19,6 +19,8 @@ input.addEventListener('input',function(){
 })
 
 let count=0;
+
+let history=[];
 const countEI = document.getElementById("count");
 const incBtn = document.getElementById("inc");
 const decBtn = document.getElementById("dec");
@@ -34,3 +36,51 @@ decBtn.addEventListener("click",()=>{
 })
 
 
+
+function render()
+{
+    countEI.innerText = count;
+
+    if(count>0)
+    {
+        countEI.style.color='green';
+    }
+    else if(count<0)
+        countEI.style.color="red";
+    else
+    {
+        countEI.style.color="gray";
+    }
+
+
+
+}
+
+
+
+incBtn.addEventListener("click",()=>{
+    count++;
+    render();
+});
+
+decBtn.addEventListener("click",()=>{
+    count--;
+    render();
+})
+
+
+
+let state = {count:0};
+
+function CounterComponent(state)
+{
+    const {count} = state;
+
+    const color = count>0?"grean":count<0?"red":"gray";
+
+     return `
+    <h1 style="color:${color}">${count}</h1>
+    <button id="inc">+</button>
+    <button id="dec">-</button>
+  `;
+}
