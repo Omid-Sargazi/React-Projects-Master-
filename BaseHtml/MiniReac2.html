@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .counter { 
+            border: 2px solid #333; 
+            padding: 20px; 
+            margin: 20px; 
+            border-radius: 10px;
+            display: inline-block;
+        }
+        button { 
+            margin: 5px; 
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .info {
+            background: #f0f0f0;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+        <h1>🎯 قدم بعدی: Component State</h1>
+    <p>حالا هر counter state خودش را دارد!</p>
+    
+    <div id="app1"></div>
+    <div id="app2"></div>
+    
+    <div class="info">
+        <h3>لاگ رویدادها:</h3>
+        <div id="logs"></div>
+    </div>
+
+    <script>
+        // 📊 سیستم لاگ برای دیدن اتفاق‌ها
+        function log(message) {
+            const logs = document.getElementById('logs');
+            const time = new Date().toLocaleTimeString();
+            logs.innerHTML = `<div><strong>${time}:</strong> ${message}</div>` + logs.innerHTML;
+        }
+
+        // 🏗️ ساختار جدید: هر component نمونه خودش را دارد
+        function createCounter(initialValue = 0, containerId) {
+            log(`ساخت counter جدید با مقدار ${initialValue} در ${containerId}`);
+            
+            // 🔒 state خصوصی برای این component
+            let state = {
+                count: initialValue,
+                id: Math.random().toString(36).substr(2, 9) // یک ID منحصر به فرد
+            };
+            
+            // 🎨 تابع render این component
+            function render() {
+                log(`🔵 Render counter ${state.id} با count=${state.count}`);
+                
+                const color = state.count > 0 ? "green" : state.count < 0 ? "red" : "#666";
+                
+                return `
+                    <div class="counter">
+                        <h2>Counter ${state.id.substr(0, 5)}</h2>
+                        <h1 style="color: ${color}; font-size: 48px;">
+                            ${state.count}
+                        </h1>
+                        <button class="inc">➕ افزایش</button>
+                        <button class="dec">➖ کاهش</button>
+                        <button class="reset">🔄 صفر کن</button>
+                        <p>ID: ${state.id}</p>
+                    </div>
+                `;
+            }
+            
+            // 🎯 setState مخصوص این component
+            function setState(newState) {
+                log(`🟡 setState برای counter ${state.id}: ${JSON.stringify(state)} → ${JSON.stringify(newState)}`);
+                
+                // آپدیت state
+                state = { ...state, ...newState };
+                
+                // رندر component در container مخصوصش
+                const container = document.getElementById(containerId);
+                container.innerHTML = render();
+                
+                // وصل کردن eventها بعد از رندر
+                bindEvents(containerId);
+            }
+            
+            // 🎮 وصل کردن eventها
+            function bindEvents(containerId) {
+                const container = document.getElementById(containerId);
+                
+                container.querySelector('.inc').onclick = () => {
+                    log(`دکمه ➕ در counter ${state.id} کلیک شد`);
+                    setState({ count: state.count + 1 });
+                };
+                
+                container.querySelector('.dec').onclick = () => {
+                    log(`دکمه ➖ در counter ${state.id} کلیک شد`);
+                    setState({ count: state.count - 1 });
+                };
+                
+                container.querySelector('.reset').onclick = () => {
+                    log(`دکمه 🔄 در counter ${state.id} کلیک شد`);
+                    setState({ count: 0 });
+                };
+            }
+            
+            // 🚀 اولین رندر
+            const container = document.getElementById(containerId);
+            container.innerHTML = render();
+            bindEvents(containerId);
+            
+            // 🔧 برگرداندن API عمومی این component
+            return {
+                getState: () => ({ ...state }), // کپی از state برای محافظت
+                setState: setState,
+                getId: () => state.id
+            };
+        }
+        
+        log("🚀 شروع برنامه...");
+        
+        // ساخت دو counter کاملاً مستقل
+        const counter1 = createCounter(10, 'app1');
+        const counter2 = createCounter(-5, 'app2');
+        
+        // 💡 تست: می‌توانیم از بیرون هم state را عوض کنیم
+        setTimeout(() => {
+            log("⏰ تایمر: بعد از 3 ثانیه، counter اول را 5+ می‌کنم");
+            counter1.setState({ count: counter1.getState().count + 5 });
+        }, 3000);
+        
+        setTimeout(() => {
+            log("⏰ تایمر: بعد از 5 ثانیه، counter دوم را 10- می‌کنم");
+            counter2.setState({ count: counter2.getState().count - 10 });
+        }, 5000);
+        
+        // 🎪 دکمه برای تست عملیات group
+        document.body.innerHTML += `
+            <div style="margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 10px;">
+                <h3>🎪 عملیات گروهی</h3>
+                <button id="resetAll">🔄 صفر کردن همه counters</button>
+                <button id="addToAll">➕ +2 به همه counters</button>
+            </div>
+        `;
+        
+        // نگهداری reference به همه counters
+        const counters = [counter1, counter2];
+        
+        document.getElementById('resetAll').onclick = () => {
+            log("🔄 عملیات گروهی: صفر کردن همه counters");
+            counters.forEach(counter => {
+                counter.setState({ count: 0 });
+            });
+        };
+        
+        document.getElementById('addToAll').onclick = () => {
+            log("➕ عملیات گروهی: +2 به همه counters");
+            counters.forEach(counter => {
+                const current = counter.getState().count;
+                counter.setState({ count: current + 2 });
+            });
+        };
+    
+    </script>
+</body>
+</html>
