@@ -63,6 +63,81 @@
         <button onclick="resetState()">Reset State (آزمایش)</button>
     </div>
 
-    <script src="mini-react.js"></script>
+    <script>
+
+        let state = {count:0};
+        console.log("state",state)
+
+        function CounterComponent(state)
+        {
+            const {count} = state;
+            const color = count > 0 ? "green" : count < 0 ? "red" : "gray";
+
+             return `
+                    <h1 style="color: ${color}; font-size: 48px;">
+                    ${count}
+                    </h1>
+                    <button id="inc">➕ افزایش</button>
+                    <button id="dec">➖ کاهش</button>
+                    <p>State فعلی: ${JSON.stringify(state)}</p>
+                `;
+        }
+
+        console.log("Component با state اولیه:");
+        console.log(CounterComponent(state));
+
+        function render()
+        {
+            console.log("🔵 render() اجرا شد");
+              const app = document.getElementById("app");
+              app.innerHTML = CounterComponent(state);
+              console.log("UI آپدیت شد");
+        }
+
+        function setState(newState)
+        {
+            console.log("🟡 setState() فراخوانی شد");
+            console.log("state قدیمی:", state);
+    
+          // state جدید را می‌سازیم (بدون mutate مستقیم)
+          state = {...state,...newState};
+           console.log("state جدید:", state);
+           render();
+        }
+
+        function bindEvents()
+        {
+            document.getElementById("inc").onclick=()=>{
+                console.log("دکمه + کلیک شد");
+                setState({count:state.count+1})
+            }
+
+            document.getElementById("dec").onclick=()=>{
+                setState({count:state.count-1})
+            }
+
+            document.getElementById("reset").onclick=()=>{
+                setState({count:0})
+            }
+
+
+        }
+
+        function enhancedRender()
+        {
+             render();
+                bindEvents();
+        }
+
+        function setState(newState)
+        {
+            state = { ...state, ...newState };
+            enhancedRender();
+        }
+
+        // render();
+
+        enhancedRender();
+    </script>
 </body>
 </html>
