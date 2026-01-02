@@ -1,4 +1,18 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
+import Grid from "@mui/material/Unstable_Grid2"; // ✅ Grid جدید
+import {
+  Card,
+  CardContent,
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+  Checkbox,
+  Snackbar,
+  Alert,
+  Stack,
+} from "@mui/material";
+import { Add, Delete } from "@mui/icons-material";
 import { getTasks, createTask, updateTask, deleteTask } from "../api";
 
 interface TaskItem {
@@ -11,6 +25,15 @@ interface TaskItem {
 export default function TaskPage() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [newTitle, setNewTitle] = useState("");
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: "success" | "error";
+  }>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const loadTasks = async () => {
     try {
@@ -19,10 +42,10 @@ export default function TaskPage() {
         const data = await res.json();
         setTasks(data);
       } else {
-        setTasks([]);
+        setSnackbar({ open: true, message: "Failed to load tasks", severity: "error" });
       }
     } catch (err) {
-      console.error("Error loading tasks", err);
+      setSnackbar({ open: true, message: "Network error", severity: "error" });
     }
   };
 
@@ -34,50 +57,100 @@ export default function TaskPage() {
     if (!newTitle.trim()) return;
     const res = await createTask(newTitle);
     if (res.ok) {
+      setSnackbar({ open: true, message: "Task added successfully!", severity: "success" });
       setNewTitle("");
       loadTasks();
+    } else {
+      setSnackbar({ open: true, message: "Failed to add task", severity: "error" });
     }
   };
 
   const handleToggle = async (task: TaskItem) => {
-    await updateTask(task.id, task.title, !task.isDone);
-    loadTasks();
+    const res = await updateTask(task.id, task.title, !task.isDone);
+    if (res.ok) {
+      loadTasks();
+    }
   };
 
   const handleDelete = async (id: number) => {
-    await deleteTask(id);
-    loadTasks();
+    const res = await deleteTask(id);
+    if (res.ok) {
+      setSnackbar({ open: true, message: "Task deleted!", severity: "success" });
+      loadTasks();
+    }
   };
 
   return (
-    <div>
-      <h2>My Tasks</h2>
-      <input
-        type="text"
-        placeholder="New Task"
-        value={newTitle}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value)}
-      />
-      <button onClick={handleCreate}>Add</button>
+    <>
+      <Typography variant="h5" sx={{ mb: 3, fontWeight: "bold" }}>
+        My Tasks
+      </Typography>
 
-      <ul>
-        {tasks.map((t) => (
-          <li key={t.id}>
-            <span
-              style={{
-                textDecoration: t.isDone ? "line-through" : "none",
-                marginRight: "8px",
+      <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
+        <TextField
+          label="New Task"
+          variant="outlined"
+          fullWidth
+          value={newTitle}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          startIcon={<Add />}
+          sx={{ bgcolor: "#4a69bd" }}
+          onClick={handleCreate}
+        >
+          Add
+        </Button>
+      </Stack>
+
+      <Grid container spacing={2}>
+        {tasks.map((task) => (
+          <Grid xs={12} sm={6} key={task.id}>
+            <Card
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                p: 2,
+                boxShadow: 2,
+                backgroundColor: task.isDone ? "#d4edda" : "white",
               }}
             >
-              {t.title}
-            </span>
-            <button onClick={() => handleToggle(t)}>
-              {t.isDone ? "Undo" : "Done"}
-            </button>
-            <button onClick={() => handleDelete(t.id)}>Delete</button>
-          </li>
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Checkbox
+                    checked={task.isDone}
+                    onChange={() => handleToggle(task)}
+                    color="success"
+                  />
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      textDecoration: task.isDone ? "line-through" : "none",
+                      color: task.isDone ? "#555" : "#2c3e50",
+                    }}
+                  >
+                    {task.title}
+                  </Typography>
+                </Stack>
+              </CardContent>
+
+              <IconButton color="error" onClick={() => handleDelete(task.id)}>
+                <Delete />
+              </IconButton>
+            </Card>
+          </Grid>
         ))}
-      </ul>
-    </div>
+      </Grid>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      >
+        <Alert severity={snackbar.severity}>{snackbar.message}</Alert>
+      </Snackbar>
+    </>
   );
 }
