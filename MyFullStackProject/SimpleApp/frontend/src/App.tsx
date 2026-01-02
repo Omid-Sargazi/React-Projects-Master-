@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import './App.css';
-import RegisterForm from "./components/RegisterForm";
+import RegisterForm from "./components/RegisterForm"
 import LoginForm from "./components/LoginForm";
 import TaskPage from "./components/TaskPage";
 import "./index.css";
