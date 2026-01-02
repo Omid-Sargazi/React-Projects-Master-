@@ -11,7 +11,13 @@ import {
   Snackbar,
   Alert,
   Stack,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
+
+
 import { Add, Delete } from "@mui/icons-material";
 import { getTasks, createTask, updateTask, deleteTask } from "../api";
 
@@ -25,6 +31,8 @@ interface TaskItem {
 export default function TaskPage() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [newTitle, setNewTitle] = useState("");
+  const [editTask, setEditTask] = useState<TaskItem | null>(null);
+  const [editTitle, setEditTitle] = useState("");
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
     message: string;
@@ -44,7 +52,7 @@ export default function TaskPage() {
       } else {
         setSnackbar({ open: true, message: "Failed to load tasks", severity: "error" });
       }
-    } catch (err) {
+    } catch {
       setSnackbar({ open: true, message: "Network error", severity: "error" });
     }
   };
@@ -77,6 +85,23 @@ export default function TaskPage() {
     if (res.ok) {
       setSnackbar({ open: true, message: "Task deleted!", severity: "success" });
       loadTasks();
+    }
+  };
+
+  const handleEditOpen = (task: TaskItem) => {
+    setEditTask(task);
+    setEditTitle(task.title);
+  };
+
+  const handleEditSave = async () => {
+    if (!editTask) return;
+    const res = await updateTask(editTask.id, editTitle, editTask.isDone);
+    if (res.ok) {
+      setSnackbar({ open: true, message: "Task updated!", severity: "success" });
+      setEditTask(null);
+      loadTasks();
+    } else {
+      setSnackbar({ open: true, message: "Failed to update", severity: "error" });
     }
   };
 
@@ -143,6 +168,27 @@ export default function TaskPage() {
           </Grid>
         ))}
       </Grid>
+
+      <Dialog open={!!editTask} onClose={() => setEditTask(null)}>
+        <DialogTitle>Edit Task</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            fullWidth
+            label="Title"
+            variant="outlined"
+            value={editTitle}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setEditTitle(e.target.value)}
+            sx={{ mt: 1 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setEditTask(null)}>Cancel</Button>
+          <Button variant="contained" sx={{ bgcolor: "#4a69bd" }} onClick={handleEditSave}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Snackbar
         open={snackbar.open}

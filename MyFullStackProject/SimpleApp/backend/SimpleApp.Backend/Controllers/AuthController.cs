@@ -1,5 +1,10 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace SimpleApp.Backend.Controllers
 {
@@ -9,11 +14,15 @@ namespace SimpleApp.Backend.Controllers
     {
          private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IConfiguration _configuration;
 
-         public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+         public AuthController(UserManager<IdentityUser> userManager, 
+         SignInManager<IdentityUser> signInManager,
+         IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _configuration = configuration;
         }
 
         [HttpPost("register")]
@@ -28,16 +37,41 @@ namespace SimpleApp.Backend.Controllers
             return BadRequest(result.Errors);
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+         [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginDto model)
+    {
+        var user = await _userManager.FindByNameAsync(model.Username);
+        if (user == null)
+            return Unauthorized("Invalid username or password");
+
+        var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+        if (!result.Succeeded)
+            return Unauthorized("Invalid username or password");
+
+        // ✅ Generate JWT Token
+        var jwtSettings = _configuration.GetSection("Jwt");
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var claims = new[]
         {
-            var result = await _signInManager.PasswordSignInAsync(dto.Username, dto.Password, false, false);
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.Name, user.UserName)
+        };
 
-            if (result.Succeeded)
-                return Ok("Login successful");
+        var token = new JwtSecurityToken(
+            issuer: jwtSettings["Issuer"],
+            audience: jwtSettings["Audience"],
+            claims: claims,
+            expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["ExpiresInMinutes"])),
+            signingCredentials: creds
+        );
 
-            return Unauthorized("Invalid credentials");
-        }
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return Ok(new { token = tokenString });
+    }
+
     }
 
 
@@ -54,6 +88,8 @@ namespace SimpleApp.Backend.Controllers
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
     }
+
+
 }
 
 

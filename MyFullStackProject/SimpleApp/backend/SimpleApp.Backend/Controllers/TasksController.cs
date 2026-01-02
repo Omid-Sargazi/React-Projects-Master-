@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -31,32 +33,19 @@ namespace SimpleApp.Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMyTasks()
         {
-            var user = await GetCurrentUserAsync();
-            if (user == null) return Unauthorized();
-
-            var tasks = await _context.Tasks
-                .Where(t => t.UserId == user.Id)
-                .ToListAsync();
-
+           var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var tasks = await _context.Tasks.Where(t => t.UserId == userId).ToListAsync();
             return Ok(tasks);
         }
 
          [HttpPost]
-        public async Task<IActionResult> CreateTask([FromBody] TaskItem dto)
+        public async Task<IActionResult> CreateTask([FromBody] TaskItem model)
         {
-            var user = await GetCurrentUserAsync();
-            if (user == null) return Unauthorized();
-
-            var task = new Models.TaskItem
-            {
-                Title = dto.Title,
-                IsDone = dto.IsDone,
-                UserId = user.Id
-            };
-
-            _context.Tasks.Add(task);
+           var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            model.UserId = userId;
+            _context.Tasks.Add(model);
             await _context.SaveChangesAsync();
-            return Ok(task);
+            return Ok(model);
         }
 
         [HttpPut("{id}")]
