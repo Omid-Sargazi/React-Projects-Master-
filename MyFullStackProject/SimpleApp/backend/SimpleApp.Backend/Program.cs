@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Middleware
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -28,7 +28,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
-app.UseAuthentication(); // 👈 اضافه شد
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllers();
