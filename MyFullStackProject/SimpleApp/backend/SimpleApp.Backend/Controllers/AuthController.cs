@@ -55,3 +55,12 @@ namespace SimpleApp.Backend.Controllers
         public string Password { get; set; } = string.Empty;
     }
 }
+
+
+/*
+    {
+  "username": "omid20605",
+  "email": "o@o.com",
+  "password": "15935755Omid$@"
+}
+*/

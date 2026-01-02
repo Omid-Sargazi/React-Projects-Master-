@@ -4,12 +4,14 @@ using SimpleApp.Backend.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("SimpleAppDb"));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -27,9 +29,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
 app.UseRouting();
 app.UseAuthentication(); 
 app.UseAuthorization();
+
+
 
 app.MapControllers();
 
