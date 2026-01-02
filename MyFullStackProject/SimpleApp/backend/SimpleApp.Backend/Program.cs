@@ -18,7 +18,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000", "http://localhost:3002", "https://localhost:3000", "https://localhost:3002")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();  // برای cookies/sessions
+        });
+});
 
 var app = builder.Build();
 
@@ -29,9 +39,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors("AllowReactApp");
+
 app.UseAuthentication(); 
 app.UseAuthorization();
 

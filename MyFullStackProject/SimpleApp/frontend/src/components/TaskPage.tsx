@@ -1,41 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import { getTasks, createTask, updateTask, deleteTask } from "../api";
 
+interface TaskItem {
+  id: number;
+  title: string;
+  isDone: boolean;
+  userId?: string;
+}
+
 export default function TaskPage() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [newTitle, setNewTitle] = useState("");
 
-  async function loadTasks() {
-    const res = await getTasks();
-    if (res.ok) {
-      const data = await res.json();
-      setTasks(data);
-    } else {
-      setTasks([]);
+  const loadTasks = async () => {
+    try {
+      const res = await getTasks();
+      if (res.ok) {
+        const data = await res.json();
+        setTasks(data);
+      } else {
+        setTasks([]);
+      }
+    } catch (err) {
+      console.error("Error loading tasks", err);
     }
-  }
+  };
 
   useEffect(() => {
     loadTasks();
   }, []);
 
-  async function handleCreate() {
+  const handleCreate = async () => {
+    if (!newTitle.trim()) return;
     const res = await createTask(newTitle);
     if (res.ok) {
       setNewTitle("");
       loadTasks();
     }
-  }
+  };
 
-  async function handleToggle(task) {
+  const handleToggle = async (task: TaskItem) => {
     await updateTask(task.id, task.title, !task.isDone);
     loadTasks();
-  }
+  };
 
-  async function handleDelete(id) {
+  const handleDelete = async (id: number) => {
     await deleteTask(id);
     loadTasks();
-  }
+  };
 
   return (
     <div>
@@ -44,7 +56,7 @@ export default function TaskPage() {
         type="text"
         placeholder="New Task"
         value={newTitle}
-        onChange={(e) => setNewTitle(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value)}
       />
       <button onClick={handleCreate}>Add</button>
 
@@ -52,7 +64,10 @@ export default function TaskPage() {
         {tasks.map((t) => (
           <li key={t.id}>
             <span
-              style={{ textDecoration: t.isDone ? "line-through" : "none" }}
+              style={{
+                textDecoration: t.isDone ? "line-through" : "none",
+                marginRight: "8px",
+              }}
             >
               {t.title}
             </span>
