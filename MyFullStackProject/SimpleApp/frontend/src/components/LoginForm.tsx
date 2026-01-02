@@ -1,10 +1,28 @@
 import React, { useState, FormEvent } from "react";
 import { login } from "../api";
 
+import {
+  Card,
+  CardContent,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+  Stack,
+} from "@mui/material";
+
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
+
+   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: "success" | "error" }>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -23,26 +41,42 @@ export default function LoginForm() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        /><br />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        /><br />
-        <button type="submit">Login</button>
-      </form>
-      <p>{message}</p>
-    </div>
+     <Card sx={{ maxWidth: 400, mx: "auto", mt: 4, boxShadow: 3 }}>
+      <CardContent>
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}>
+          Login
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={2}>
+            <TextField
+              label="Username"
+              variant="outlined"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <TextField
+              label="Password"
+              variant="outlined"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Button type="submit" variant="contained" sx={{ bgcolor: "#4a69bd" }}>
+              Login
+            </Button>
+          </Stack>
+        </form>
+      </CardContent>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      >
+        <Alert severity={snackbar.severity}>{snackbar.message}</Alert>
+      </Snackbar>
+    </Card>
   );
 }
