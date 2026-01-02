@@ -1,10 +1,12 @@
 /* 🌿 ریست ساده و فونت */
 body {
-  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f5f6fa;
-  color: #333;
   margin: 0;
-  padding: 0;
+  background-color: #f4f6f9;
+  font-family: Roboto, "Segoe UI", sans-serif;
+}
+
+a {
+  text-decoration: none;
 }
 
 nav {
