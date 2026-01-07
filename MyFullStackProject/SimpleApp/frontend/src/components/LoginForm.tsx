@@ -1,6 +1,4 @@
 import React, { useState, FormEvent } from "react";
-import { login } from "../api";
-
 import {
   Card,
   CardContent,
@@ -11,41 +9,53 @@ import {
   Alert,
   Stack,
 } from "@mui/material";
+import { login as loginApi } from "../api";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: "success" | "error";
+  }>({ open: false, message: "", severity: "success" });
 
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: "success" | "error" }>({
-    open: false,
-    message: "",
-    severity: "success",
-  });
+  const handleSubmit = async (e: FormEvent) => {
+  e.preventDefault();
+  try {
+    const { response, data } = await loginApi(username, password);
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    try {
-      const res = await login(username, password);
-      if (res.ok) {
-        setMessage("✅ Logged in successfully!");
-      } else {
-        const error = await res.text();
-        setMessage(`❌ ${error}`);
-      }
-    } catch (err) {
-      console.error(err);
-      setMessage("❌ Network error occurred.");
+    if (response.ok && data.token) {
+      login(data.token); // ✅ Context update
+      setSnackbar({
+        open: true,
+        message: "✅ Logged in successfully! Redirecting...",
+        severity: "success",
+      });
+      setTimeout(() => navigate("/tasks"), 2000);
+    } else {
+      const msg = data?.message || "Invalid credentials";
+      setSnackbar({ open: true, message: msg, severity: "error" });
     }
-  };
+  } catch (err) {
+    console.error("Login error:", err);
+    setSnackbar({ open: true, message: "Network error", severity: "error" });
+  }
+};
+
 
   return (
-     <Card sx={{ maxWidth: 400, mx: "auto", mt: 4, boxShadow: 3 }}>
+    <Card sx={{ maxWidth: 400, mx: "auto", mt: 4, boxShadow: 3 }}>
       <CardContent>
         <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}>
           Login
         </Typography>
+
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <TextField

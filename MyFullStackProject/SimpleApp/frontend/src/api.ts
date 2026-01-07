@@ -1,73 +1,89 @@
 const API_BASE = "http://localhost:5247/api";
 
-// --- Register ---
-export async function register(
-  username: string,
-  email: string,
-  password: string
-): Promise<Response> {
+// 🔹 گرفتن token از localStorage
+function getToken() {
+  return localStorage.getItem("token");
+}
+
+export async function register(username: string, email: string, password: string) {
   const response = await fetch(`${API_BASE}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, email, password }),
-    credentials: "include", // برای نگهداری کوکی session
   });
   return response;
 }
 
-// --- Login ---
-export async function login(
-  username: string,
-  password: string
-): Promise<Response> {
+export async function login(username: string, password: string) {
   const response = await fetch(`${API_BASE}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
-    credentials: "include",
   });
-  return response;
+
+  let data: any = null;
+  try {
+    data = await response.json();
+  } catch {
+    // اگر سرور body نداد، parse نکن
+    data = {};
+  }
+
+  if (response.ok && data.token) {
+    localStorage.setItem("token", data.token);
+  }
+
+  return { response, data };
 }
 
-// --- Get All Tasks ---
-export async function getTasks(): Promise<Response> {
+export async function logout() {
+  localStorage.removeItem("token"); // ✅ حذف JWT از مرورگر
+}
+
+export async function getTasks() {
+  const token = getToken();
   const response = await fetch(`${API_BASE}/tasks`, {
-    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // ✅ ارسال JWT در Header
+    },
   });
   return response;
 }
 
-// --- Create Task ---
-export async function createTask(title: string): Promise<Response> {
+export async function createTask(title: string) {
+  const token = getToken();
   const response = await fetch(`${API_BASE}/tasks`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({ title, isDone: false }),
-    credentials: "include",
   });
   return response;
 }
 
-// --- Update Task ---
-export async function updateTask(
-  id: number,
-  title: string,
-  isDone: boolean
-): Promise<Response> {
+export async function updateTask(id: number, title: string, isDone: boolean) {
+  const token = getToken();
   const response = await fetch(`${API_BASE}/tasks/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({ title, isDone }),
-    credentials: "include",
   });
   return response;
 }
 
-// --- Delete Task ---
-export async function deleteTask(id: number): Promise<Response> {
+export async function deleteTask(id: number) {
+  const token = getToken();
   const response = await fetch(`${API_BASE}/tasks/${id}`, {
     method: "DELETE",
-    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   return response;
 }

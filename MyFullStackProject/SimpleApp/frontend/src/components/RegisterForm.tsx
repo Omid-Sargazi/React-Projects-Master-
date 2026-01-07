@@ -1,6 +1,4 @@
 import React, { useState, FormEvent } from "react";
-import { register } from "../api";
-
 import {
   Card,
   CardContent,
@@ -11,41 +9,64 @@ import {
   Alert,
   Stack,
 } from "@mui/material";
+import { register } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-
-  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: "success" | "error" }>({
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: "success" | "error";
+  }>({
     open: false,
     message: "",
     severity: "success",
   });
 
-  async function handleSubmit(e: FormEvent)  {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       const res = await register(username, email, password);
       if (res.ok) {
-        setMessage("✅ Registered successfully!");
+        setSnackbar({
+          open: true,
+          message: "✅ Registration successful! Redirecting to login...",
+          severity: "success",
+        });
+
+        // پاک‌سازی فیلدها
+        setUsername("");
+        setEmail("");
+        setPassword("");
+
+        // بعد از 2.5 ثانیه برو به صفحه Login
+        setTimeout(() => {
+          navigate("/login");
+        }, 2500);
       } else {
         const error = await res.text();
-        setMessage(`❌ ${error}`);
+        setSnackbar({ open: true, message: error, severity: "error" });
       }
-    } catch (err) {
-      console.error(err);
-      setMessage("❌ Network error occurred.");
+    } catch {
+      setSnackbar({ open: true, message: "Network error occurred.", severity: "error" });
     }
   };
 
   return (
-     <Card sx={{ maxWidth: 400, mx: "auto", mt: 4, boxShadow: 3 }}>
+    <Card sx={{ maxWidth: 400, mx: "auto", mt: 4, boxShadow: 3 }}>
       <CardContent>
-        <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}>
+        <Typography
+          variant="h5"
+          sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}
+        >
           Register
         </Typography>
+
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <TextField
