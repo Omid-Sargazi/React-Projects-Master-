@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 export default function SimpleClockWithFirst()
 {
     const [time, setTime] = useState(new Date().toLocaleTimeString());
+    console.log("render");
 
     useEffect(()=>{
         const interval = setInterval(()=>{
             setTime(new Date().toLocaleTimeString());
+    console.log("effect");
         },1000)
-        return ()=>clearInterval(interval);
+    
+        return ()=>{console.log("clean"); clearInterval(interval)};
     },[])
     // const time = new Date().toLocaleTimeString();
     return(
