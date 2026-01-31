@@ -6,6 +6,7 @@ import LoginCounter from "./Components/LoginCounter";
 import Dashboard from "./Components/Dashboard";
 import UseRefHook from "./Components/UseRefHook";
 import Stopwatch from "./Components/Stopwatch";
+import UseRefTest from "./Components/UseRefTest";
 
 
 
@@ -18,6 +19,8 @@ function App() {
    <UseRefHook/>
 
    <Stopwatch/>
+
+   <UseRefTest/>
    </>
    
   );
