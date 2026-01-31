@@ -28,6 +28,14 @@ export default function SimpleTodoWithFirst()
     const deleteTodo = (id)=>{
         setTodos(todos.filter(todo=>todo.id !== id));
     }
+
+    const toggleTodo = (id)=>{
+      setTodos(
+        todos.map(todo=>todo.id===id ? {...todo,completed:!todo.completed}:todo)
+      );
+    };
+
+
     return (
     <div>
       <h1>Todo App (Simple)</h1>
@@ -42,6 +50,15 @@ export default function SimpleTodoWithFirst()
         {todos.map((todo, index)=>(
             <li key={todo.id}>{todo.title}
             <button onClick={()=>deleteTodo(todo.id)}>delete</button>
+           <span
+            onClick={() => toggleTodo(todo.id)}
+            style={{
+              cursor: "pointer",
+              textDecoration: todo.completed ? "line-through" : "none"
+            }}
+          >
+            {todo.title}
+          </span>
             </li>
         ))}
       </ul>
