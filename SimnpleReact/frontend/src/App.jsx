@@ -12,6 +12,7 @@ import useTodos from "./hooks/useTodos";
 import TodoForm from "./Components/TodoForm";
 import TodoList from "./Components/TodoList";
 import SimpleTodo from "./Components/SimpleTodo";
+import SimpleTodoWithFirst from "./Components/SimpleTodoWithFirst";
 
 
 
@@ -40,7 +41,9 @@ function App() {
         onRemove={removeTodo}
       /> */}
 
-      <SimpleTodo/>
+      {/* <SimpleTodo/> */}
+
+      <SimpleTodoWithFirst/>
    </>
    
   );
