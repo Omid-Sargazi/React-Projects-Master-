@@ -1,4 +1,4 @@
-export default function validation(title)
+export default function validateTodo(title)
 {
     if(!title.trim())
     {
