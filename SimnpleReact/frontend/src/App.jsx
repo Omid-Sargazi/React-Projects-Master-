@@ -7,20 +7,24 @@ import Dashboard from "./Components/Dashboard";
 import UseRefHook from "./Components/UseRefHook";
 import Stopwatch from "./Components/Stopwatch";
 import UseRefTest from "./Components/UseRefTest";
+import Parent from "./Components/Parent";
 
 
 
 function App() {
   return (
    <>
-   <TestHook1/>
+   {/* <TestHook1/>
    <LoginCounter/>
    <Dashboard/>
    <UseRefHook/>
 
    <Stopwatch/>
 
-   <UseRefTest/>
+   <UseRefTest/> */}
+
+   <h1>==================</h1>
+   <Parent/>
    </>
    
   );
