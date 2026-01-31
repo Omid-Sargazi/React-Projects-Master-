@@ -1,0 +1,113 @@
+/* 🌿 ریست ساده و فونت */
+body {
+  margin: 0;
+  background-color: #f4f6f9;
+  font-family: Roboto, "Segoe UI", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+nav {
+  background-color: #4a69bd;
+  padding: 10px 20px;
+  display: flex;
+  gap: 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* 🌿 ساختار عمومی صفحات */
+h2 {
+  color: #2f3640;
+}
+
+div {
+  margin: 20px;
+}
+
+/* 🌿 فرم‌ها */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  gap: 8px;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+button {
+  background-color: #4a69bd;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #3c548f;
+}
+
+/* 🌿 لیست وظایف */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+}
+
+li span {
+  flex-grow: 1;
+}
+
+li button {
+  margin-left: 6px;
+}
+
+li button:nth-child(2) {
+  background-color: #2ed573;
+}
+
+li button:nth-child(2):hover {
+  background-color: #28b463;
+}
+
+li button:nth-child(3) {
+  background-color: #ff4757;
+}
+
+li button:nth-child(3):hover {
+  background-color: #c0392b;
+}
+
+/* 🌿 بخش پیام‌ها */
+p {
+  color: #555;
+  font-size: 14px;
+}
