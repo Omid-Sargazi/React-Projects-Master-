@@ -5,14 +5,23 @@ export default function SimpleTodoWithFirst()
 
     const [inputValue, setInputValue] = useState("");
     const [todos, setTodos] = useState([]);
+    const [error,setError] = useState(null);
 
     const handleSubmit = (e)=>{
          e.preventDefault();
 
          if(inputValue.trim()==="")
          {
+          setError("Todo Can not be empty.")
             return;
          }
+
+         if (inputValue.length < 3) {
+          setError("Todo must be at least 3 characters");
+          return;
+        }
+
+        setError(null);
 
          setTodos([
         ...todos,
@@ -61,6 +70,7 @@ export default function SimpleTodoWithFirst()
           </span>
             </li>
         ))}
+        {error && <p style={{color:"red"}}>{error}</p>}
       </ul>
     </div>
   );
