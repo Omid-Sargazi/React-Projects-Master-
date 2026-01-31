@@ -11,6 +11,7 @@ import Parent from "./Components/Parent";
 import useTodos from "./hooks/useTodos";
 import TodoForm from "./Components/TodoForm";
 import TodoList from "./Components/TodoList";
+import SimpleTodo from "./Components/SimpleTodo";
 
 
 
@@ -31,13 +32,15 @@ function App() {
    <Parent/> */}
 
 
-   <h1>Todo App</h1>
+   {/* <h1>Todo App</h1>
       <TodoForm onAdd={addTodos} />
       <TodoList
         todos={todos}
         onToggle={toggleTodo}
         onRemove={removeTodo}
-      />
+      /> */}
+
+      <SimpleTodo/>
    </>
    
   );
