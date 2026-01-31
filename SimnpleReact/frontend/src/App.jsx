@@ -8,10 +8,14 @@ import UseRefHook from "./Components/UseRefHook";
 import Stopwatch from "./Components/Stopwatch";
 import UseRefTest from "./Components/UseRefTest";
 import Parent from "./Components/Parent";
+import useTodos from "./hooks/useTodos";
+import TodoForm from "./Components/TodoForm";
+import TodoList from "./Components/TodoList";
 
 
 
 function App() {
+  const { todos, addTodos, toggleTodo, removeTodo } = useTodos();
   return (
    <>
    {/* <TestHook1/>
@@ -23,8 +27,17 @@ function App() {
 
    <UseRefTest/> */}
 
-   <h1>==================</h1>
-   <Parent/>
+   {/* <h1>==================</h1>
+   <Parent/> */}
+
+
+   <h1>Todo App</h1>
+      <TodoForm onAdd={addTodos} />
+      <TodoList
+        todos={todos}
+        onToggle={toggleTodo}
+        onRemove={removeTodo}
+      />
    </>
    
   );

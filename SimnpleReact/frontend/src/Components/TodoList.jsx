@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 
-export default function TodoList()
+export default function TodoList({ todos, onToggle, onRemove })
 {
     return(
         <>
