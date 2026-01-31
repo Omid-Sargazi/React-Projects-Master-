@@ -14,10 +14,19 @@ export default function SimpleTodoWithFirst()
             return;
          }
 
-         setTodos([...todos,inputValue]);
+         setTodos([
+        ...todos,
+        {
+            id: Date.now(),
+            title: inputValue,
+            completed: false
+        }
+]);
          setInputValue("");
+    }
 
-
+    const deleteTodo = (id)=>{
+        setTodos(todos.filter(todo=>todo.id !== id));
     }
     return (
     <div>
@@ -31,7 +40,9 @@ export default function SimpleTodoWithFirst()
       <ul>
         <li>Example todo</li>
         {todos.map((todo, index)=>(
-            <li key={index}>{todo}</li>
+            <li key={todo.id}>{todo.title}
+            <button onClick={()=>deleteTodo(todo.id)}>delete</button>
+            </li>
         ))}
       </ul>
     </div>
