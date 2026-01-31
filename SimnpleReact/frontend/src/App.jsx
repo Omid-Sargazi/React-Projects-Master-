@@ -13,6 +13,7 @@ import TodoForm from "./Components/TodoForm";
 import TodoList from "./Components/TodoList";
 import SimpleTodo from "./Components/SimpleTodo";
 import SimpleTodoWithFirst from "./Components/SimpleTodoWithFirst";
+import SimpleSearchWithFirst from "./Components/SimpleSearchWithFirst";
 
 
 
@@ -43,7 +44,9 @@ function App() {
 
       {/* <SimpleTodo/> */}
 
-      <SimpleTodoWithFirst/>
+      {/* <SimpleTodoWithFirst/> */}
+
+      <SimpleSearchWithFirst/>
    </>
    
   );
