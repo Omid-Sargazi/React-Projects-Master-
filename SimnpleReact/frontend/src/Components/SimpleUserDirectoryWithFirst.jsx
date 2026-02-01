@@ -4,9 +4,13 @@ export default function SimpleUserDirectoryWithFirst()
 {
 
     const [search, setSearch] = useState("");
-    const [user, setUser] = useState([]);
+    const [users, setUser] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const filteredUsers = useMemo(()=>{
+        return users.filter(user=> user.name.toLowerCase().include(search))
+    },[users, search])
 
     useEffect(()=>{
         const controller = new AbortController();
