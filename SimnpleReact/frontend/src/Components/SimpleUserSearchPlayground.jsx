@@ -1,9 +1,41 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function SimpleUserSearchPlayground()
 {
 
     const [search, setSearch] = useState("");
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+
+    useEffect(()=>{
+        const controller = new AbortController();
+
+        setLoading(true);
+        setError(null);
+
+        fetch("https://jsonplaceholder.typicode.com/users",{
+            signal:controller.signal
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            setUsers(data);
+            setLoading(false);
+        })
+        .catch((err)=>{
+            if(err.name !=="AbortError")
+            {
+                setError("Failed to load users");
+                setLoading(false);
+            }
+        })
+
+        return ()=>{
+            controller.abort();
+        }
+    },[])
+
     return(
         <>
              <div>
