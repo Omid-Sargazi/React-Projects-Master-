@@ -1,72 +1,90 @@
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useRef } from "react"
+function SimpleUserDirectoryWithFirst() {
+  const [search, setSearch] = useState("");
+  const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
 
-export default function SimpleUserDirectoryWithFirst()
-{
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    const [search, setSearch] = useState("");
-    const [users, setUser] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [page, setpage] = useState(1);
-    const pageSize = 3;
+  const pageSize = 3;
+  const inputRef = useRef(null);
 
-    const filteredUsers = useMemo(()=>{
-        return users.filter(user=> user.name.toLowerCase().include(search))
-    },[users, search]);
+  useEffect(() => {
+    const controller = new AbortController();
+    setLoading(true);
+    setError(null);
 
-    const paginatedUsers = useMemo(()=>{
-        const start = (page -1) * pageSize;
-        return filteredUsers.slice(start, start+pageSize);
-    },[filteredUsers, page]);
+    fetch("https://jsonplaceholder.typicode.com/users", {
+      signal: controller.signal
+    })
+      .then(res => res.json())
+      .then(data => {
+        setUsers(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        if (err.name !== "AbortError") {
+          setError("Failed to load users");
+          setLoading(false);
+        }
+      });
 
+    return () => controller.abort();
+  }, []);
 
+  const filteredUsers = useMemo(() => {
+    return users.filter(user =>
+      user.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [users, search]);
 
-    useEffect(()=>{
-        const controller = new AbortController();
+  const paginatedUsers = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return filteredUsers.slice(start, start + pageSize);
+  }, [filteredUsers, page]);
 
-        setLoading(true);
-        setError(null);
+  useEffect(() => {
+    setPage(1);
+    inputRef.current?.focus();
+  }, [search]);
 
-        fetch("https://jsonplaceholder.typicode.com/users",{
-            signal:controller.abort
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            setUser(data);
-            setLoading(false);
-        })
+  return (
+    <div>
+      <h1>User Directory</h1>
 
-        .catch(err=>{
-            if(err.name!=="AbortError")
-            {
-                setError("Failed to load users")
-                setLoading(false);
-            }
-        });
+      <input
+        ref={inputRef}
+        placeholder="Search users..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
-        return ()=>controller.abort()
-    },[])
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
+      <ul>
+        {paginatedUsers.map(user => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
 
-    return(
-        <>
-            <h1>User Directory</h1>
-            <input placeholder="Search users..." value={search} onChange={(e)=>setSearch(e.target.value)}/>
-            {console.log(search)}
+      <div>
+        <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>
+          Prev
+        </button>
 
-            <ul>
-                <li></li>
-            </ul>
+        <span> Page {page} </span>
 
-            <div>
-                <button disabled={pageSize===1} onClick={()=>setpage(p=>p-1)}>Prev</button>
-                <span>Page </span>
-                <button disabled={page * pageSize >= filteredUsers.length}
-                    onClick={() => setPage(p => p + 1)}>Next</button>
-            </div>
-
-            <p>Loading....</p>
-            <p>Error happened</p>
-        </>
-    )
+        <button
+          disabled={page * pageSize >= filteredUsers.length}
+          onClick={() => setPage(p => p + 1)}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
 }
+
+export default SimpleUserDirectoryWithFirst;
