@@ -10,6 +10,7 @@ export default function SimpleTodoFetchWithFirst()
 
     useEffect(()=>{
         setLoading(true);
+        const controller = new AbortController();
 
         fetch("https://jsonplaceholder.typicode.com/todos")
         .then(res=>res.json())
@@ -30,7 +31,10 @@ export default function SimpleTodoFetchWithFirst()
         }).catch(()=>{
             setError("Failed to load todos")
             .setLoading(false);
-        })
+        });
+        return ()=>{
+            controller.abort();
+        }
     },[filter])
 
     return(
