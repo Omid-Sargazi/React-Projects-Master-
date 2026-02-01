@@ -1,15 +1,45 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function SimpleUserDirectoryWithFirst()
 {
 
     const [search, setSearch] = useState("");
+    const [user, setUser] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(()=>{
+        const controller = new AbortController();
+
+        setLoading(true);
+        setError(null);
+
+        fetch("https://jsonplaceholder.typicode.com/users",{
+            signal:controller.abort
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            setUser(data);
+            setLoading(false);
+        })
+
+        .catch(err=>{
+            if(err.name!=="AbortError")
+            {
+                setError("Failed to load users")
+                setLoading(false);
+            }
+        });
+
+        return ()=>controller.abort()
+    },[])
 
 
     return(
         <>
             <h1>User Directory</h1>
-            <input placeholder="Search users..." value={search} onChange={(e)=>e.target.value}/>
+            <input placeholder="Search users..." value={search} onChange={(e)=>setSearch(e.target.value)}/>
+            {console.log(search)}
 
             <ul>
                 <li></li>
