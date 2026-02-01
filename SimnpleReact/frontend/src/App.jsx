@@ -20,6 +20,7 @@ import SimpleTodoFetchWithFirst from "./Components/SimpleTodoFetchWithFirst";
 import SimpleProductFilterWithFirst from "./Components/SimpleProductFilterWithFirst";
 import SimpleUserDirectoryWithFirst from "./Components/SimpleUserDirectoryWithFirst";
 import SimpleUserDirectoryWithFirst2 from "./Components/SimpleUserDirectoryWithFirst2";
+import SimpleUserSearchPlayground from "./Components/SimpleUserSearchPlayground";
 
 
 
@@ -61,7 +62,9 @@ function App() {
 
       {/* <SimpleProductFilterWithFirst/> */}
       {/* <SimpleUserDirectoryWithFirst/> */}
-      <SimpleUserDirectoryWithFirst2/>
+      {/* <SimpleUserDirectoryWithFirst2/> */}
+
+      <SimpleUserSearchPlayground/>
    </>
    
   );
