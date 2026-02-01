@@ -75,8 +75,16 @@ export default function SimpleUserDirectoryWithFirst2()
   </button>
       </div>
 
-      <p>Loading...</p>
+      {loading && <p>Loading...</p>}
+      {error && <p style={{color:"red"}}>{error}</p>}
       <p>Error happened</p>
+
+
+      <ul>
+        {paginatedUsers.map(user => (
+            <li key={user.id}>{user.name}</li>
+        ))}
+    </ul>
     </div>
         </>
     )
