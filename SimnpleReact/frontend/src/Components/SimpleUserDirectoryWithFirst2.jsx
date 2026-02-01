@@ -9,10 +9,22 @@ export default function SimpleUserDirectoryWithFirst2()
 
     const [search, setSearch] = useState("");
 
+    const [page, setPage] = useState(1);
+
+    const pageSize=3;
+
+   
 
     const filteredUsers = useMemo(()=>{
-        return users.filter(user=>user.name.toLowerCase().include(search.toLowerCase()),[users,search]);
+        return users.filter(user=>user.name.toLowerCase().includes(search.toLowerCase()),[users,search]);
     });
+
+     const paginatedUsers = useMemo(()=>{
+        const start = (page -1)*pageSize;
+        return  filteredUsers.slice(start, start+pageSize);
+    },[filteredUsers,page]);
+
+
     useEffect(()=>{
         const controller = new AbortController();
 
@@ -53,9 +65,14 @@ export default function SimpleUserDirectoryWithFirst2()
       </ul>
 
       <div>
-        <button>Prev</button>
-        <span>Page 1</span>
-        <button>Next</button>
+        <button disabled={page ===1} onClick={()=>setPage(p=>p-1)}>Prev</button>
+        <span>Page {page}</span>
+        <button
+    disabled={page * pageSize >= filteredUsers.length}
+    onClick={() => setPage(p => p + 1)}
+  >
+    Next
+  </button>
       </div>
 
       <p>Loading...</p>
