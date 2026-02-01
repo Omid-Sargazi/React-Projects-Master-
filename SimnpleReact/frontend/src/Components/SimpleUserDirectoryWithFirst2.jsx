@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 
 export default function SimpleUserDirectoryWithFirst2()
 {
@@ -8,6 +8,11 @@ export default function SimpleUserDirectoryWithFirst2()
     const [error, setError] = useState(null)
 
     const [search, setSearch] = useState("");
+
+
+    const filteredUsers = useMemo(()=>{
+        return users.filter(user=>user.name.toLowerCase().include(search.toLowerCase()),[users,search]);
+    });
     useEffect(()=>{
         const controller = new AbortController();
 
