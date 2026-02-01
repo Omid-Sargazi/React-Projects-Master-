@@ -19,6 +19,7 @@ import SimpleFetchWithFirst from "./Components/SimpleFetchWithFirst";
 import SimpleTodoFetchWithFirst from "./Components/SimpleTodoFetchWithFirst";
 import SimpleProductFilterWithFirst from "./Components/SimpleProductFilterWithFirst";
 import SimpleUserDirectoryWithFirst from "./Components/SimpleUserDirectoryWithFirst";
+import SimpleUserDirectoryWithFirst2 from "./Components/SimpleUserDirectoryWithFirst2";
 
 
 
@@ -59,7 +60,8 @@ function App() {
       {/* <SimpleTodoFetchWithFirst/> */}
 
       {/* <SimpleProductFilterWithFirst/> */}
-      <SimpleUserDirectoryWithFirst/>
+      {/* <SimpleUserDirectoryWithFirst/> */}
+      <SimpleUserDirectoryWithFirst2/>
    </>
    
   );
