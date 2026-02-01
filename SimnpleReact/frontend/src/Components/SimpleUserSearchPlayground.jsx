@@ -10,9 +10,9 @@ export default function SimpleUserSearchPlayground()
       <h1>User Search</h1>
 
       <div>
-        <input placeholder="Search users..."  value={search} onChange={e=>setSearch(e.target.value)}/>
+        
+        <SearchControls value={search} onChange={setSearch} onReset={()=>setSearch("")}/>
         {console.log(search)}
-        <button>Reset</button>
       </div>
 
       <p>Loading...</p>
@@ -22,6 +22,19 @@ export default function SimpleUserSearchPlayground()
         <li>User name</li>
       </ul>
     </div>
+        </>
+    )
+}
+
+function SearchControls({value,onChange,onReset})
+{
+    return(
+        <>
+            <div>
+                <input value={value} onChange={e=>onChange(e.target.value)} placeholder="Search users..."/>
+
+                <button onClick={onReset}>Reset</button>
+            </div>
         </>
     )
 }
