@@ -45,6 +45,9 @@ export default function SimpleProductFilterWithFirst()
                     <select value={category} onChange={e=>setCategory(e.target.value)}>
                         <option value="all">All</option>
                         <option value="electronics">Electrocics</option>
+                        <option value="women's clothing">Women's Clothing</option>
+                        <option value="men's clothing">Men's Clothing</option>
+                        <option value="jewelery">Jewelery</option>
                     </select>
 
                     <p>Loading...</p>
