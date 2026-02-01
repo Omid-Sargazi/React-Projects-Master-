@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState,React } from "react"
 
 export default function SimpleUserSearchPlayground()
 {
@@ -7,6 +7,12 @@ export default function SimpleUserSearchPlayground()
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const filteredUsers = useMemo(() => {
+  return users.filter(user =>
+    user.name.toLowerCase().includes(search.toLowerCase())
+  );
+}, [users, search]);
 
 
     useEffect(()=>{
@@ -22,6 +28,7 @@ export default function SimpleUserSearchPlayground()
         .then(data=>{
             setUsers(data);
             setLoading(false);
+            console.log(data);
         })
         .catch((err)=>{
             if(err.name !=="AbortError")
