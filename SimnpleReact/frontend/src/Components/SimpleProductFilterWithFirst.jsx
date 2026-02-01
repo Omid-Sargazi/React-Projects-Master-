@@ -11,7 +11,7 @@ export default function SimpleProductFilterWithFirst()
          const url = category === "all" ? "https://fakestoreapi.com/products":`https://fakestoreapi.com/products/category/${category}`;
    
 
-    fetch(url,{})
+    // fetch(url,{})
 
     useEffect(()=>{
         const controller = new AbortController();
@@ -48,9 +48,12 @@ export default function SimpleProductFilterWithFirst()
                         <option value="women's clothing">Women's Clothing</option>
                         <option value="men's clothing">Men's Clothing</option>
                         <option value="jewelery">Jewelery</option>
+                        <option value="s">s</option>
                     </select>
 
-                    <p>Loading...</p>
+                    {loading && <p>Loading...</p>}
+                    {error && <p style={{color:"red"}}>{error}</p>}
+                    {!loading && products.length === 0 && <p>No products found</p>}
 
                     <ul>
                         {products.map(product=>(

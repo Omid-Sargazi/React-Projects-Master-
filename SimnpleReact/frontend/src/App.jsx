@@ -18,6 +18,7 @@ import SimpleClockWithFirst from "./Components/SimpleClockWithFirst";
 import SimpleFetchWithFirst from "./Components/SimpleFetchWithFirst";
 import SimpleTodoFetchWithFirst from "./Components/SimpleTodoFetchWithFirst";
 import SimpleProductFilterWithFirst from "./Components/SimpleProductFilterWithFirst";
+import SimpleUserDirectoryWithFirst from "./Components/SimpleUserDirectoryWithFirst";
 
 
 
@@ -57,7 +58,8 @@ function App() {
 
       {/* <SimpleTodoFetchWithFirst/> */}
 
-      <SimpleProductFilterWithFirst/>
+      {/* <SimpleProductFilterWithFirst/> */}
+      <SimpleUserDirectoryWithFirst/>
    </>
    
   );
