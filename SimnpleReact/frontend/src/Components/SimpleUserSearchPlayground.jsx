@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState,React } from "react"
+import { useEffect, useMemo, useState,React, useRef } from "react"
 
 export default function SimpleUserSearchPlayground()
 {
@@ -7,6 +7,8 @@ export default function SimpleUserSearchPlayground()
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const inputRef = useRef(null);
 
     const filteredUsers = useMemo(() => {
   return users.filter(user =>
@@ -50,7 +52,7 @@ export default function SimpleUserSearchPlayground()
 
       <div>
         
-        <SearchControls value={search} onChange={setSearch} onReset={()=>setSearch("")}/>
+        <SearchControls  value={search} onChange={setSearch} onReset={()=>{setSearch(""); inputRef.current.focus()}} inputRef={inputRef}/>
         {console.log(search)}
       </div>
 
@@ -65,12 +67,12 @@ export default function SimpleUserSearchPlayground()
     )
 }
 
-function SearchControls({value,onChange,onReset})
+function SearchControls({value,onChange,onReset, inputRef})
 {
     return(
         <>
             <div>
-                <input value={value} onChange={e=>onChange(e.target.value)} placeholder="Search users..."/>
+                <input ref={inputRef} value={value} onChange={e=>onChange(e.target.value)} placeholder="Search users..."/>
 
                 <button onClick={onReset}>Reset</button>
             </div>
