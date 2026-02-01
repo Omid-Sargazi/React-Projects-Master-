@@ -8,27 +8,51 @@ export default function SimpleProductFilterWithFirst()
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    useEffect(()=>{
-        fetch("https://fakestoreapi.com/products/categories")
-        .then(res=>res.json())
-        .then(data=>setCategories(data))
-        .catch(()=>setError("Failed to load categories"))
-    },[]);
+         const url = category === "all" ? "https://fakestoreapi.com/products":`https://fakestoreapi.com/products/category/${category}`;
+   
 
-    
+    fetch(url,{})
+
+    useEffect(()=>{
+        const controller = new AbortController();
+
+        setLoading(true);
+        setError(null);
+
+        fetch(url, {signal:controller.signal})
+        .then(res=>res.json())
+        .then(data=>{
+            setProducts(data);
+            setLoading(false);
+        })
+        .catch(err=>{
+            if(err.name!=="AbortError"){
+                setError("Failed to load products")
+                .setLoading(false);
+            }
+        });
+
+        return ()=>{
+            controller.abort()
+        }
+    },[category]);
+
+
     return(
         <>
             <div>
                     <h1>Products</h1>
                     <select value={category} onChange={e=>setCategory(e.target.value)}>
                         <option value="all">All</option>
-                        <option>Electrocics</option>
+                        <option value="electronics">Electrocics</option>
                     </select>
 
                     <p>Loading...</p>
 
                     <ul>
-                        <li>Product title</li>
+                        {products.map(product=>(
+                            <li key={product.id}>{product.title}</li>
+                        ))}
                     </ul>
             </div>
         </>
