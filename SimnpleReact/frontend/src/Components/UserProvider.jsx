@@ -12,3 +12,17 @@ function UserProvider({ children }) {
     </UserContext.Provider>
   );
 }
+
+
+function UserInfo() {
+  const { user, logout } = useContext(UserContext);
+
+  if (!user) return <p>Not logged in</p>;
+
+  return (
+    <>
+      <p>User: {user}</p>
+      <button onClick={logout}>Logout</button>
+    </>
+  );
+}
