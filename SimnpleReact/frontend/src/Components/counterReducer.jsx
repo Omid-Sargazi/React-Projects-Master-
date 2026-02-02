@@ -12,3 +12,21 @@ function counterReducer(state, action) {
       return state;
   }
 }
+
+
+function Counter() {
+  const [state, dispatch] = useReducer(counterReducer, { count: 0 });
+
+  return (
+    <div>
+      <h1>Counter</h1>
+      <p>{state.count}</p>
+
+      <button onClick={() => dispatch({ type: "increment" })}>+</button>
+      <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+      <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
+    </div>
+  );
+}
+
+export default Counter;
