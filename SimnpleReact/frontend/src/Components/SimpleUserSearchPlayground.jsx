@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState,React, useRef } from "react"
+import { useEffect, useMemo, useState,React, useRef, useCallback } from "react"
 
 export default function SimpleUserSearchPlayground()
 {
@@ -15,6 +15,8 @@ export default function SimpleUserSearchPlayground()
     user.name.toLowerCase().includes(search.toLowerCase())
   );
 }, [users, search]);
+
+
 
 
     useEffect(()=>{
@@ -45,6 +47,15 @@ export default function SimpleUserSearchPlayground()
         }
     },[])
 
+    const handleSearchChange = useCallback((value) => {
+  setSearch(value);
+}, []);
+
+const handleReset = useCallback(() => {
+  setSearch("");
+  inputRef.current.focus();
+}, []);
+
     return(
         <>
              <div>
@@ -52,16 +63,18 @@ export default function SimpleUserSearchPlayground()
 
       <div>
         
-        <SearchControls  value={search} onChange={setSearch} onReset={()=>{setSearch(""); inputRef.current.focus()}} inputRef={inputRef}/>
+        <SearchControls  value={search} onChange={handleSearchChange} onReset={()=>{setSearch(""); inputRef.current.focus()}} inputRef={inputRef}/>
         {console.log(search)}
       </div>
 
-      <p>Loading...</p>
-      <p>Error happened</p>
+        {loading && <p>Loading...</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <ul>
-        <li>User name</li>
-      </ul>
+    <ul>
+    {filteredUsers.map(user => (
+        <li key={user.id}>{user.name}</li>
+    ))}
+    </ul>
     </div>
         </>
     )
