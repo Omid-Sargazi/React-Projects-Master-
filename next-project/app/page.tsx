@@ -1,4 +1,5 @@
 import Image from "next/image";
+import UserSearch from "./UserSearch";
 
 // export default function Home() {
 //   return (
@@ -25,11 +26,13 @@ export default async function Page()
     <div>
       <h1>User Dashboard</h1>
 
-      <ul>
+      {/* <ul>
         {users.map((user:any)=>(
           <li key={user.id}>{user.name}</li>
         ))}
-      </ul>
+      </ul> */}
+
+      <UserSearch users={users}/>
     </div>
   )
 }
