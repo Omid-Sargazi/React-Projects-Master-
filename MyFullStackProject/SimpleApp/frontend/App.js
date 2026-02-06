@@ -20,6 +20,14 @@ function App() {
         <input placeholder="Amount" type="number" />
         <button>Add</button>
       </form>
+
+      <ul>
+  {expenses.map((exp, index) => (
+    <li key={index}>
+      {exp.title} - ${exp.amount}
+    </li>
+  ))}
+</ul>
     </div>
   );
 }
