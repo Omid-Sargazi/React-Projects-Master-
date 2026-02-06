@@ -17,6 +17,13 @@ function App() {
 };
 
 
+const total = expenses.reduce(
+  (sum, exp) => sum + Number(exp.amount),
+  0
+);
+
+
+
   return (
      <div className="container">
       <h1>Expense Tracker</h1>
@@ -41,6 +48,8 @@ function App() {
   <button onClick={() => removeExpense(index)}>❌</button>
 </li>
 </ul>
+
+<h3>Total: ${total}</h3>
     </div>
   );
 }
