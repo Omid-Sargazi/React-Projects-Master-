@@ -11,6 +11,12 @@ function App() {
     setAmount("");
   };
 
+
+  const removeExpense = (index) => {
+  setExpenses(expenses.filter((_, i) => i !== index));
+};
+
+
   return (
      <div className="container">
       <h1>Expense Tracker</h1>
@@ -26,7 +32,14 @@ function App() {
     <li key={index}>
       {exp.title} - ${exp.amount}
     </li>
+
+    
   ))}
+
+  <li key={index}>
+  {exp.title} - ${exp.amount}
+  <button onClick={() => removeExpense(index)}>❌</button>
+</li>
 </ul>
     </div>
   );
