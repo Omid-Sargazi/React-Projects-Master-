@@ -11,3 +11,5 @@ namespace SimpleApp.Backend.Data
             public DbSet<TaskItem> Tasks => Set<TaskItem>();
     }
 }
+
+
