@@ -6,6 +6,7 @@ import { useState } from 'react';
 import UsersApp from './mini-projects/users/UsersApp';
 import CounterApp from './mini-projects/Counter/CounterApp';
 import ProductCartApp from './mini-projects/Product/ProductCartApp';
+import SearchApp from './mini-projects/Search/SearchApp';
 
 function App() {
   return (
@@ -15,7 +16,9 @@ function App() {
       {/* <TodoProject2/> */}
       {/* <UsersApp/> */}
       {/* <CounterApp/> */}
-      <ProductCartApp/>
+      {/* <ProductCartApp/> */}
+
+      <SearchApp/>
     </div>
   );
 }
