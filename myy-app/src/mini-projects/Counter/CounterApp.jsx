@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import ChildCounter from "./ChildCounter";
 
 export default function CounterApp()
 {
@@ -7,7 +8,7 @@ export default function CounterApp()
     // function increase()
     // {
     //     setCount(count +1)
-    //     // console.log("render")
+    //     console.log("render")
     // }
     // function decrease()
     // {
@@ -22,11 +23,12 @@ export default function CounterApp()
 
     const increase = useCallback(()=>{
         setCount(c=>c+1)
-    },[count]);
+        console.log("render")
+    },[]);
 
     const decrease = useCallback(()=>{
         setCount(c=>c-1)
-    },[count])
+    },[])
         console.log("render")
 
     return(
@@ -35,6 +37,7 @@ export default function CounterApp()
             <p>Count: {count}</p>
             <button onClick={increase}>+</button>
             <button onClick={decrease}>-</button>
+            <ChildCounter  increase = {increase} decrease={decrease} state={count}/>
         </>
     )
 }

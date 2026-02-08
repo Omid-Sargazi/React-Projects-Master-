@@ -5,6 +5,7 @@ import TodoProject2 from './mini-projects/TODO2/TodoProject2';
 import { useState } from 'react';
 import UsersApp from './mini-projects/users/UsersApp';
 import CounterApp from './mini-projects/Counter/CounterApp';
+import ProductCartApp from './mini-projects/Product/ProductCartApp';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       {/* <TodoApp/> */}
       {/* <TodoProject2/> */}
       {/* <UsersApp/> */}
-      <CounterApp/>
+      {/* <CounterApp/> */}
+      <ProductCartApp/>
     </div>
   );
 }
