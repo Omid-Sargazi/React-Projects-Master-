@@ -4,6 +4,7 @@ import TodoApp from './mini-projects/todo/TodoApp';
 import TodoProject2 from './mini-projects/TODO2/TodoProject2';
 import { useState } from 'react';
 import UsersApp from './mini-projects/users/UsersApp';
+import CounterApp from './mini-projects/Counter/CounterApp';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <h1>React TS Admin Dashboard</h1>
       {/* <TodoApp/> */}
       {/* <TodoProject2/> */}
-      <UsersApp/>
+      {/* <UsersApp/> */}
+      <CounterApp/>
     </div>
   );
 }
