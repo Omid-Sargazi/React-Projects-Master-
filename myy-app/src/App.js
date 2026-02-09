@@ -10,6 +10,7 @@ import SearchApp from './mini-projects/Search/SearchApp';
 import RenderTest from './mini-projects/Rendering/RenderTest';
 import RenderCounter from './mini-projects/RenderCounter/RenderCounter';
 import AccurateTimer from './mini-projects/AccurateTimer/AccurateTimer';
+import RenderChildMmeo from './mini-projects/MemoChild/RenderChildMmeo';
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
       {/* <SearchApp/> */}
       {/* <RenderTest/> */}
       {/* <RenderCounter/> */}
-      <AccurateTimer/>
+      {/* <AccurateTimer/> */}
+      <RenderChildMmeo/>
     </div>
   );
 }
