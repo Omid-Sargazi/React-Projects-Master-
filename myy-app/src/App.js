@@ -8,6 +8,7 @@ import CounterApp from './mini-projects/Counter/CounterApp';
 import ProductCartApp from './mini-projects/Product/ProductCartApp';
 import SearchApp from './mini-projects/Search/SearchApp';
 import RenderTest from './mini-projects/Rendering/RenderTest';
+import RenderCounter from './mini-projects/RenderCounter/RenderCounter';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
       {/* <ProductCartApp/> */}
 
       {/* <SearchApp/> */}
-      <RenderTest/>
+      {/* <RenderTest/> */}
+      <RenderCounter/>
     </div>
   );
 }
