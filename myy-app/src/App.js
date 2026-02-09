@@ -9,6 +9,7 @@ import ProductCartApp from './mini-projects/Product/ProductCartApp';
 import SearchApp from './mini-projects/Search/SearchApp';
 import RenderTest from './mini-projects/Rendering/RenderTest';
 import RenderCounter from './mini-projects/RenderCounter/RenderCounter';
+import AccurateTimer from './mini-projects/AccurateTimer/AccurateTimer';
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
 
       {/* <SearchApp/> */}
       {/* <RenderTest/> */}
-      <RenderCounter/>
+      {/* <RenderCounter/> */}
+      <AccurateTimer/>
     </div>
   );
 }
