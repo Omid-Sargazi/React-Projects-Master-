@@ -7,6 +7,7 @@ import UsersApp from './mini-projects/users/UsersApp';
 import CounterApp from './mini-projects/Counter/CounterApp';
 import ProductCartApp from './mini-projects/Product/ProductCartApp';
 import SearchApp from './mini-projects/Search/SearchApp';
+import RenderTest from './mini-projects/Rendering/RenderTest';
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
       {/* <CounterApp/> */}
       {/* <ProductCartApp/> */}
 
-      <SearchApp/>
+      {/* <SearchApp/> */}
+      <RenderTest/>
     </div>
   );
 }
