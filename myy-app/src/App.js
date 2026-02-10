@@ -12,6 +12,7 @@ import RenderCounter from './mini-projects/RenderCounter/RenderCounter';
 import AccurateTimer from './mini-projects/AccurateTimer/AccurateTimer';
 import RenderChildMmeo from './mini-projects/MemoChild/RenderChildMmeo';
 import ParentButton from './mini-projects/ButtonAndChild/ChildButton';
+import ParentButton2 from './mini-projects/ButtonAndChild/ParentButton2';
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
       {/* <AccurateTimer/> */}
       {/* <RenderChildMmeo/> */}
 
-      <ParentButton/>
+      <ParentButton2/>
     </div>
   );
 }
