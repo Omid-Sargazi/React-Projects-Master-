@@ -13,6 +13,7 @@ import AccurateTimer from './mini-projects/AccurateTimer/AccurateTimer';
 import RenderChildMmeo from './mini-projects/MemoChild/RenderChildMmeo';
 import ParentButton from './mini-projects/ButtonAndChild/ChildButton';
 import ParentButton2 from './mini-projects/ButtonAndChild/ParentButton2';
+import SearchUsers from './mini-projects/ButtonAndChild/SearchUsers';
 
 function App() {
   return (
@@ -30,7 +31,9 @@ function App() {
       {/* <AccurateTimer/> */}
       {/* <RenderChildMmeo/> */}
 
-      <ParentButton2/>
+      {/* <ParentButton2/> */}
+
+      <SearchUsers/>
     </div>
   );
 }

@@ -4,9 +4,9 @@ export default function ParentButton2()
 {
     const [count, setCount] = useState(0);
 
-    const Increase = useCallback(()=>{
+    const Increase = ()=>{
         setCount(c=>c+1);
-    },[]); 
+    }; 
     return(
         <>
         <h2>Parent</h2>
