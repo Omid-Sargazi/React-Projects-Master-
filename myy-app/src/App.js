@@ -11,6 +11,7 @@ import RenderTest from './mini-projects/Rendering/RenderTest';
 import RenderCounter from './mini-projects/RenderCounter/RenderCounter';
 import AccurateTimer from './mini-projects/AccurateTimer/AccurateTimer';
 import RenderChildMmeo from './mini-projects/MemoChild/RenderChildMmeo';
+import UseMemoText from './mini-projects/UseMemeUseCallback/UseMemoText';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       {/* <RenderCounter/> */}
       {/* <AccurateTimer/> */}
       {/* <RenderChildMmeo/> */}
+      <UseMemoText/>
 
     </div>
   );
