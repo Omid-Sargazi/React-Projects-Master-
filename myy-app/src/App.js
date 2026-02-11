@@ -14,6 +14,7 @@ import RenderChildMmeo from './mini-projects/MemoChild/RenderChildMmeo';
 import UseMemoText from './mini-projects/UseMemeUseCallback/UseMemoText';
 import TodoUseMemo from './mini-projects/TodoUseMemo';
 import UseRefConcept from './mini-projects/UseRefConcept/UseRefConcept';
+import UseRefInput from './mini-projects/UseRefConcept/UseRefInput';
 
 
 function App() {
@@ -33,7 +34,9 @@ function App() {
       {/* <RenderChildMmeo/> */}
       {/* <UseMemoText/> */}
       {/* <TodoUseMemo/> */}
-      <UseRefConcept/>
+      {/* <UseRefConcept/> */}
+
+      <UseRefInput/>
 
     </div>
   );
