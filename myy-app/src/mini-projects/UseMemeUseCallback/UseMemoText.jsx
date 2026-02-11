@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 import Preview from "./Preview";
 
 export default function UseMemoText()
@@ -6,6 +6,10 @@ export default function UseMemoText()
     console.log("Parent rendered");
     const [text, setText] = useState("");
     const [count, setCount] = useState(0);
+
+    const style = useMemo(()=>{
+        return {color:"green"}
+    },[]);
 
     const increase =()=>{
         setCount(c=>c+1);
@@ -29,7 +33,7 @@ export default function UseMemoText()
                     value={text}
                     onChange={e=>changeText(e)}
                 />
-                <Preview text={text}/>
+                <Preview text={text} style={style}/>
         </>
     )
 }
