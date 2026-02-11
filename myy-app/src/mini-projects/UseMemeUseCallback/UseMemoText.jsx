@@ -3,7 +3,7 @@ import Preview from "./Preview";
 
 export default function UseMemoText()
 {
-    console.log("App rendered");
+    console.log("Parent rendered");
     const [text, setText] = useState("");
     const [count, setCount] = useState(0);
 
