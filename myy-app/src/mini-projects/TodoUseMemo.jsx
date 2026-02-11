@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import TodoItem from "./todo/TodoItem";
 import TodoItemm from "./TodoItemm";
 
@@ -14,9 +14,9 @@ export default function TodoUseMemo()
 
    
 
-    const deleteTodo = (id)=>{
+    const deleteTodo = useCallback((id)=>{
         setTodos(prev=>prev.filter(t=>t.id !== id));
-    }
+    },[]); 
     return(
         <>
             <div style={{padding:20}}>
@@ -25,7 +25,7 @@ export default function TodoUseMemo()
                     <TodoItemm
                         id={todo.id}
                         todo={todo}
-                        onDelete={()=>deleteTodo(todo.id)}
+                        onDelete={deleteTodo}
                     />
                 ))}
 
