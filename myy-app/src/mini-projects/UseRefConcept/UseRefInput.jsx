@@ -6,6 +6,9 @@ export default function UseRefInput()
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
 
+    console.log("render");
+
+
     const handleSubmit = (e)=>{
         e.preventDefault();
 
