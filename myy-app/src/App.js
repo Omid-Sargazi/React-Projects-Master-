@@ -18,6 +18,7 @@ import UseRefInput from './mini-projects/UseRefConcept/UseRefInput';
 import StopwatchRef from './mini-projects/UseRefConcept/StopwatchRef';
 import TodoList from './mini-projects/TodoList/TodoList';
 import ValidateElements from './mini-projects/ValidateItems/ValidateElements';
+import ProductManager from './mini-projects/ProductManager/ProductManager';
 
 
 function App() {
@@ -43,7 +44,8 @@ function App() {
        */}
        {/* <StopwatchRef/> */}
        {/* <TodoList/> */}
-       <ValidateElements/>
+       {/* <ValidateElements/> */}
+       <ProductManager/>
 
     </div>
   );
