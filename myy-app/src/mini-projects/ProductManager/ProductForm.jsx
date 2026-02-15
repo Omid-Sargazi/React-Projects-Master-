@@ -7,6 +7,8 @@ export default function ProductForm()
         price:""
     });
 
+    const [items, setItems] = useState([]);
+
     const handleChange = (e)=>{
         setForm({
             ...form,
@@ -34,6 +36,11 @@ export default function ProductForm()
             name:"",
             price:""
         })
+    }
+
+    function onAddProduct(product)
+    {
+        setItems(prev=>[...prev,product])
     }
     return(
         <>
