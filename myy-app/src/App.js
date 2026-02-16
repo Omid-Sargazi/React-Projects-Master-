@@ -23,6 +23,7 @@ import ProductForm from './mini-projects/ProductManager/ProductForm';
 import Counter2 from './mini-projects/Counter2/Counter2';
 import ThemeToggle from './mini-projects/ToggleDarkMode/ThemeToggle';
 import PasswordToggle from './mini-projects/ToggleDarkMode/PasswordToggle';
+import Clock from './mini-projects/ToggleDarkMode/Clock';
 
 
 function App() {
@@ -53,7 +54,9 @@ function App() {
        {/* <ProductForm/> */}
        {/* <Counter2/> */}
        {/* <ThemeToggle/> */}
-       <PasswordToggle/>
+       {/* <PasswordToggle/> */}
+
+       <Clock/>
 
     </div>
   );
