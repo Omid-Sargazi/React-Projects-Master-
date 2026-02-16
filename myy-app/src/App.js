@@ -21,6 +21,7 @@ import ValidateElements from './mini-projects/ValidateItems/ValidateElements';
 import ProductManager from './mini-projects/ProductManager/ProductManager';
 import ProductForm from './mini-projects/ProductManager/ProductForm';
 import Counter2 from './mini-projects/Counter2/Counter2';
+import ThemeToggle from './mini-projects/ToggleDarkMode/ThemeToggle';
 
 
 function App() {
@@ -49,7 +50,8 @@ function App() {
        {/* <ValidateElements/> */}
        {/* <ProductManager/> */}
        {/* <ProductForm/> */}
-       <Counter2/>
+       {/* <Counter2/> */}
+       <ThemeToggle/>
 
     </div>
   );
