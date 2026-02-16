@@ -20,6 +20,7 @@ import TodoList from './mini-projects/TodoList/TodoList';
 import ValidateElements from './mini-projects/ValidateItems/ValidateElements';
 import ProductManager from './mini-projects/ProductManager/ProductManager';
 import ProductForm from './mini-projects/ProductManager/ProductForm';
+import Counter2 from './mini-projects/Counter2/Counter2';
 
 
 function App() {
@@ -47,7 +48,8 @@ function App() {
        {/* <TodoList/> */}
        {/* <ValidateElements/> */}
        {/* <ProductManager/> */}
-       <ProductForm/>
+       {/* <ProductForm/> */}
+       <Counter2/>
 
     </div>
   );
