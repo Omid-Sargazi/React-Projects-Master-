@@ -9,9 +9,15 @@ export default function ThemeToggle()
     }
     return(
         <>
-            <div style={{background:dark?"black":"white", color:dark?"white":"black", height:"100vh"}}>
-                <button onClick={() => setDark(!dark)}>Toggle Theme</button>
-            </div>
+            <div style={{
+      background: dark ? "black" : "white",
+      color: dark ? "white" : "black",
+      height: "100vh"
+    }}>
+      <button onClick={() => setDark(!dark)}>
+        Toggle Theme
+      </button>
+    </div>
         </>
     )
 }
