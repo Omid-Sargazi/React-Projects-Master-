@@ -24,6 +24,7 @@ import Counter2 from './mini-projects/Counter2/Counter2';
 import ThemeToggle from './mini-projects/ToggleDarkMode/ThemeToggle';
 import PasswordToggle from './mini-projects/ToggleDarkMode/PasswordToggle';
 import Clock from './mini-projects/ToggleDarkMode/Clock';
+import Todo2 from './mini-projects/TodoProject/Todo2';
 
 
 function App() {
@@ -56,7 +57,8 @@ function App() {
        {/* <ThemeToggle/> */}
        {/* <PasswordToggle/> */}
 
-       <Clock/>
+       {/* <Clock/> */}
+       <Todo2/>
 
     </div>
   );
