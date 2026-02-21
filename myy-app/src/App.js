@@ -25,6 +25,7 @@ import ThemeToggle from './mini-projects/ToggleDarkMode/ThemeToggle';
 import PasswordToggle from './mini-projects/ToggleDarkMode/PasswordToggle';
 import Clock from './mini-projects/ToggleDarkMode/Clock';
 import Todo2 from './mini-projects/TodoProject/Todo2';
+import UserList from './mini-projects/MiniAdminPanel/context/hooks/components/UI/Users/UserList';
 
 
 function App() {
@@ -58,7 +59,8 @@ function App() {
        {/* <PasswordToggle/> */}
 
        {/* <Clock/> */}
-       <Todo2/>
+       {/* <Todo2/> */}
+       <UserList/>
 
     </div>
   );
