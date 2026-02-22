@@ -16,7 +16,7 @@ export default function UserList()
         }
     }
    })
-    console.log(data);
+    console.log(users);
     return(
         <>
                 <h1>Mini Dashboard</h1>
