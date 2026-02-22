@@ -27,6 +27,7 @@ import Clock from './mini-projects/ToggleDarkMode/Clock';
 import Todo2 from './mini-projects/TodoProject/Todo2';
 import UserList from './mini-projects/MiniAdminPanel/context/hooks/components/UI/Users/UserList';
 import WelcomeMessage from './react-200-scenarios/WelcomeMessage';
+import Timer from './react-200-scenarios/Timer';
 
 
 function App() {
@@ -62,7 +63,8 @@ function App() {
        {/* <Clock/> */}
        {/* <Todo2/> */}
        {/* <UserList/> */}
-       <WelcomeMessage/>
+       {/* <WelcomeMessage/> */}
+       <Timer/>
 
     </div>
   );
