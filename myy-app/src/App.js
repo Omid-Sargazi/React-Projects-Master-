@@ -28,6 +28,7 @@ import Todo2 from './mini-projects/TodoProject/Todo2';
 import UserList from './mini-projects/MiniAdminPanel/context/hooks/components/UI/Users/UserList';
 import WelcomeMessage from './react-200-scenarios/WelcomeMessage';
 import Timer from './react-200-scenarios/Timer';
+import SearchFilter from './react-200-scenarios/SearchFilter';
 
 
 function App() {
@@ -64,7 +65,8 @@ function App() {
        {/* <Todo2/> */}
        {/* <UserList/> */}
        {/* <WelcomeMessage/> */}
-       <Timer/>
+       {/* <Timer/> */}
+       <SearchFilter/>
 
     </div>
   );
